@@ -44,11 +44,9 @@
    -G	--GithubAPI <args>	#调用githubapi进行漏洞探测 调用github可能需要进行FQ服务
    -I	--info		#输出操作系统版本信息，默认打开
    -A	--All		#进行所有的探测
-   -LS	--Local-SUID	#本地进行SUID检测
-   -LB	--Local-Backups	#本地进行备份文件检测
-   -LL	--Local-logs	#本地寻找日志文件
-   -LE	--Local-Server	#本地寻找启动服务
-   -LA	--Local-ALL 	#本地启动所有的文件检测
+   -L	--Local-ALL 	#本地启动所有的文件检测
+   -B	--banner 	#输出一些装x的信息
+   -U	--update	#更新版本
 ```
 
 `-V`:print（程序版本）即可
@@ -63,15 +61,11 @@
 
 `-A`：调用全部参数 `linux.systeminfo()`，`linux.check_CVE()`，`find.SUID_CVE()`,`find_backup()`,`find.serice()`,`find_logs()`
 
-`-LS`: ` linux_systeminfo()`,`find_SUID_CVE()`
+`-LA`:`find.SUID_CVE()`,`find_backup()`,`find.service()`,`find_logs()`
 
-`-LB`:` linux_systeminfo()`,`find_backup()`
+`-B`:`linux.banner()`
 
-`-LE`:` linux_systeminfo()`,`find_Service()`
-
-`-LL`：`linux_systeminfo()`,`find_Logs()`
-
-`-LA`:`find.SUID_CVE()`,`find_backup()`,`find.serice()`,`find_logs()`
+`-U`：`linux.update()`
 
 ### 5.输出信息
 
@@ -85,6 +79,7 @@
 [!]：需要重点关注的信息
 [+]:程序基础执行信息
 ```
+
 
 
 

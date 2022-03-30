@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #-*- codeing:utf-8 -*-
-import subprocess,json,re,time,sys
+import subprocess,json,re,time,sys,requests
 from colorama import init,Fore
 from optparse import OptionParser
 init(autoreset=True)
@@ -125,8 +125,19 @@ class kernel:                                                               #初
         elif type =='samba':
             print(Fore.BLUE+'Start check the samba CVE......')
 
-
-
+    def update(self):
+        print(Fore.GREEN+"Update the programe!!!")
+        self.cmd('git clone https://github.com/yifaang/Linux-Privilege-Escalation.git /usr/share/Linux-Privilege-Escalation/')
+    def banner(self):
+        print(Fore.GREEN+"                                            ")
+        print(Fore.GREEN+"      ╔═╗   ╔═╗  ╔══════════╗                ")
+        print(Fore.GREEN+"      ║ ║   ║ ║  ║  ╔═══════╝                ")
+        print(Fore.GREEN+"      ║ ╚═══╝ ║  ║  ╚═══════╗                ")
+        print(Fore.GREEN+"      ╚══╗ ╔══╝  ║  ╔═══════╝                ")
+        print(Fore.GREEN+"         ║ ║     ║  ║     ╔══╗ ╔═══ ╔═══╗    ")
+        print(Fore.GREEN+"         ║ ║     ║  ║     ╚══╗ ╠═══ ║        ")
+        print(Fore.GREEN+"         ╚═╝     ╚══╝     ╚══╝ ╚═══ ╚═══╝    ")
+        print(Fore.GREEN+"                                             ")
 class linuxfind:
     def __init__(self):
         pass
@@ -166,6 +177,8 @@ if __name__ == '__main__':
     parser.add_option("-I","--info",action="store_true",help="Print System information")
     parser.add_option("-A","--all",action="store_true",help="Use all function")
     parser.add_option("-L","--linux-all",action="store_true",help="Linux All File Check")
+    parser.add_option("-U","--update",action="store_true",help="update the programe")
+    parser.add_option("-B","--banner",action="store_true",help="echo the banner")
     options,args= parser.parse_args(sys.argv[1:])
     if options.version == True:
         print(Fore.GREEN+"Version: 1.0")
@@ -188,6 +201,10 @@ if __name__ == '__main__':
         find.backup()
         find.Service()
         find.logs()
+    if options.update == True:
+        linux.update()
+    if options.banner == True:
+        linux.banner()
 
 
 
