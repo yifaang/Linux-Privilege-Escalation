@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 #-*- codeing:utf-8 -*-
-import subprocess,json,re,time
+import subprocess,json,re,time,sys
 from colorama import init,Fore
 from optparse import OptionParser
 init(autoreset=True)
@@ -52,8 +53,13 @@ class kernel:                                                               #初
             return cve_dic
 
     def Github_CVE(self,query):
-        api = 'https://api.github.com/search/repositories?q='+query+'.* CVE&sort=updated'
-        pass
+        url = 'https://api.github.com/search/repositories?q=' + query + '&sort=updated'
+        data = requests.get(url).content.decode('utf-8')
+        # print(data)
+        datalist = json.loads(data)
+        print('Find ' + str((datalist['total_count'])) + ' result')
+        for i in range(0, datalist['total_count'] - 1):
+            print(datalist['items'][i]['full_name'])
 
 
     def kernel_CVE_Check(self,one,two,three):
@@ -153,12 +159,35 @@ class linuxfind:
 if __name__ == '__main__':
     linux = kernel()        #实例化对象
     find = linuxfind()
-    linux.systeminfo()      #输出系统信息方便人工判断
-    linux.ckeck_CVE()
-    find.SUID_Check()
-    find.backup()
-    find.Service()
-    find.logs()
+    parser = OptionParser("Usage: %prog -h")
+    parser.add_option("-V","--version",action="store_true",help="program version")
+    parser.add_option("-C","--CVE-check",action="store_true",help="CVE Check")
+    parser.add_option("-G","--Git-Query",action="store",help="Github CVE Search")
+    parser.add_option("-I","--info",action="store_true",help="Print System information")
+    parser.add_option("-A","--all",action="store_true",help="Use all function")
+    parser.add_option("-L","--linux-all",action="store_true",help="Linux All File Check")
+    options,args= parser.parse_args(sys.argv[1:])
+    if options.version == True:
+        print(Fore.GREEN+"Version: 1.0")
+    if options.all == True:
+        linux.systeminfo()      #输出系统信息方便人工判断
+        linux.ckeck_CVE()
+        find.SUID_Check()
+        find.backup()
+        find.Service()
+        find.logs()
+    if options.CVE_check == True:
+        linux.systeminfo()
+        linux.ckeck_CVE()
+    if options.Git_Query != None:
+        linux.Github_CVE(options.Git_Query)
+    if options.info == True:
+        linux.systeminfo()
+    if options.linux_all == True:
+        find.SUID_Check()
+        find.backup()
+        find.Service()
+        find.logs()
 
-    # print(linux.cmd('id'))
+
 
