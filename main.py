@@ -27,6 +27,7 @@ class kernel:                                                               #初
         self.linuxinfo_dic['sudo Version'] = bytes.decode(sudo_version.stdout.read()).replace('\n','\n\t')
         self.linuxinfo_dic['uname'] = bytes.decode(uname.stdout.read())
         self.linuxinfo_dic['lsb_release'] = bytes.decode(lsb_release.stdout.read()).replace('\n','\n\t')
+
     def systeminfo(self):                                                   #工具启动时进行当前版本信息显示
         print(Fore.BLUE+'[!][Linux System Information]')
         print('[+]The Sytem Kernel Version is \n\t' + Fore.GREEN+self.linuxinfo_dic['Kernel Version'])
@@ -60,7 +61,6 @@ class kernel:                                                               #初
         print('Find ' + str((datalist['total_count'])) + ' result')
         for i in range(0, datalist['total_count'] - 1):
             print(datalist['items'][i]['full_name'])
-
 
     def kernel_CVE_Check(self,one,two,three):
         # for cve in self.cve_dic:
@@ -127,7 +127,8 @@ class kernel:                                                               #初
 
     def update(self):
         print(Fore.GREEN+"Update the programe!!!")
-        self.cmd('git clone https://github.com/yifaang/Linux-Privilege-Escalation.git /usr/share/Linux-Privilege-Escalation/')
+        find.cmd('git clone https://github.com/yifaang/Linux-Privilege-Escalation.git /usr/share/Linux-Privilege-Escalation/')
+
     def banner(self):
         print(Fore.GREEN+"                                            ")
         print(Fore.GREEN+"      ╔═╗   ╔═╗  ╔══════════╗                ")
@@ -138,15 +139,14 @@ class kernel:                                                               #初
         print(Fore.GREEN+"         ║ ║     ║  ║     ╚══╗ ╠═══ ║        ")
         print(Fore.GREEN+"         ╚═╝     ╚══╝     ╚══╝ ╚═══ ╚═══╝    ")
         print(Fore.GREEN+"                                             ")
+        
 class linuxfind:
     def __init__(self):
         pass
-
     def SUID_Check(self):
         print(Fore.BLUE+'Start find SUID file.....')
         for cmd in linux.cve_dic['Command']['SUID']:
             print(linux.cve_dic['Command']['SUID'][cmd][0]+'\n\t'+Fore.GREEN+self.cmd(cmd))
-        # self.cmd()
 
     def backup(self):
         print(Fore.BLUE + 'Start find Backsup file.....')
@@ -157,15 +157,16 @@ class linuxfind:
         print(Fore.BLUE + 'Start find Logs file.....')
         for cmd in linux.cve_dic['Command']['Logs']:
             print(linux.cve_dic['Command']['Logs'][cmd][0] + '\n\t' + Fore.GREEN + self.cmd(cmd))
+
     def Service(self):
         print(Fore.BLUE + 'Start find Services file.....')
         for cmd in linux.cve_dic['Command']['Service']:
             print(linux.cve_dic['Command']['Service'][cmd][0] + '\n\t' + Fore.GREEN + self.cmd(cmd))
+
     def cmd(self,cmd):
         shell = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         shell = bytes.decode(shell.stdout.read()).replace('\n','\n\t')
         return shell
-
 
 if __name__ == '__main__':
     linux = kernel()        #实例化对象
