@@ -98,22 +98,22 @@ class other:
     def SUID_Check(self):
         print(Fore.BLUE+'Start find SUID file.....')
         for cmd in linux.cve_dic['Command']['SUID']:
-            print(linux.cve_dic['Command']['SUID'][cmd][0]+'\n\t'+Fore.GREEN+self.cmd(cmd))
+            print(linux.cve_dic['Command']['SUID'][cmd][0]+'\n\t'+Fore.GREEN+tools.cmd(cmd))
 
     def backup(self):
         print(Fore.BLUE + 'Start find Backsup file.....')
         for cmd in linux.cve_dic['Command']['Backsup']:
-            print(linux.cve_dic['Command']['Backsup'][cmd][0] + '\n\t' + Fore.GREEN + self.cmd(cmd))
+            print(linux.cve_dic['Command']['Backsup'][cmd][0] + '\n\t' + Fore.GREEN + tools.cmd(cmd))
 
     def logs(self):
         print(Fore.BLUE + 'Start find Logs file.....')
         for cmd in linux.cve_dic['Command']['Logs']:
-            print(linux.cve_dic['Command']['Logs'][cmd][0] + '\n\t' + Fore.GREEN + self.cmd(cmd))
+            print(linux.cve_dic['Command']['Logs'][cmd][0] + '\n\t' + Fore.GREEN + tools.cmd(cmd))
 
     def Service(self):
         print(Fore.BLUE + 'Start find Services file.....')
         for cmd in linux.cve_dic['Command']['Service']:
-            print(linux.cve_dic['Command']['Service'][cmd][0] + '\n\t' + Fore.GREEN + self.cmd(cmd))
+            print(linux.cve_dic['Command']['Service'][cmd][0] + '\n\t' + Fore.GREEN + tools.cmd(cmd))
 
 if __name__ == '__main__':
     linux = kernel_linux()        #实例化对象
@@ -133,11 +133,11 @@ if __name__ == '__main__':
         print(Fore.GREEN+"Version: 1.0")
     if options.all == True:
         linux.systeminfo()      #输出系统信息方便人工判断
-        linux.ckeck_CVE()
-        find.SUID_Check()
-        find.backup()
-        find.Service()
-        find.logs()
+        linux.CVE_check()
+        other.SUID_Check()
+        other.backup()
+        other.Service()
+        other.logs()
     if options.CVE_check == True:
         linux.systeminfo()
         linux.CVE_check()
@@ -146,10 +146,10 @@ if __name__ == '__main__':
     if options.info == True:
         linux.systeminfo()
     if options.linux_all == True:
-        find.SUID_Check()
-        find.backup()
-        find.Service()
-        find.logs()
+        other.SUID_Check()
+        other.backup()
+        other.Service()
+        other.logs()
     if options.update == True:
         linux.update()
     if options.banner == True:
